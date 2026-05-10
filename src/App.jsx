@@ -210,13 +210,13 @@ export default function App() {
           <svg width={STAGE_W} height={STAGE_H} xmlns="http://www.w3.org/2000/svg" style={{ display: 'block' }}>
             <defs>
               <radialGradient id="bgGlow" cx="50%" cy="68%" r="50%">
-                <stop offset="0%" stopColor="#1d1432" stopOpacity="0.6" />
-                <stop offset="100%" stopColor="#0E0A1A" stopOpacity="0" />
+                <stop offset="0%" stopColor="#4a5d6c" stopOpacity="0.55" />
+                <stop offset="100%" stopColor="#2f3e4a" stopOpacity="0" />
               </radialGradient>
               <radialGradient id="jesusGlow" cx="50%" cy="50%" r="50%">
-                <stop offset="0%" stopColor="#FFE680" stopOpacity="0.9" />
-                <stop offset="60%" stopColor="#FFD700" stopOpacity="0.4" />
-                <stop offset="100%" stopColor="#FFD700" stopOpacity="0" />
+                <stop offset="0%" stopColor="#F7C995" stopOpacity="0.95" />
+                <stop offset="60%" stopColor="#F36B21" stopOpacity="0.45" />
+                <stop offset="100%" stopColor="#F36B21" stopOpacity="0" />
               </radialGradient>
               <filter id="softGlow" x="-50%" y="-50%" width="200%" height="200%">
                 <feGaussianBlur stdDeviation="4" result="b"/>
@@ -292,7 +292,7 @@ export default function App() {
                       className="node-circle"
                       r={r}
                       fill={t.color}
-                      stroke={isSel ? '#fff' : '#0E0A1A'}
+                      stroke={isSel ? '#EAE9E6' : '#2f3e4a'}
                       strokeWidth={isSel ? 3 : 2}
                       filter={t.glow ? 'url(#softGlow)' : undefined}
                     />

@@ -1,31 +1,31 @@
 // Node and edge data for Biblical lineage map.
 
 export const NODE_TYPES = {
-  jesus:    { color: '#FFD700', label: 'Jesus Christ',     glow: true,  r: 24 },
-  ancestor: { color: '#5A7A3A', label: 'Ancestor',         r: 14 },
-  ot:       { color: '#A06020', label: 'Old Testament',    r: 14 },
-  prophet:  { color: '#8B1A2E', label: 'Prophet',          r: 14 },
-  family:   { color: '#6B3FAA', label: 'Family',           r: 14 },
-  inner:    { color: '#B8860B', label: 'Inner Circle',     r: 16 },
-  disciple: { color: '#1B4A8A', label: 'Disciple',         r: 12 },
-  women:    { color: '#8B3A5A', label: 'Women w/ Jesus',   r: 13 },
-  church:   { color: '#2A6B6B', label: 'Early Church',     r: 13 },
-  opponent: { color: '#5A5050', label: 'Opponent',         r: 13 },
-  encounter:{ color: '#2A6A5A', label: 'Encounter',        r: 13 },
+  jesus:    { color: '#F36B21', label: 'Jesus Christ',     glow: true,  r: 24 },
+  ancestor: { color: '#7A8F5C', label: 'Ancestor',         r: 14 },
+  ot:       { color: '#C07840', label: 'Old Testament',    r: 14 },
+  prophet:  { color: '#A8453A', label: 'Prophet',          r: 14 },
+  family:   { color: '#98B8C5', label: 'Family',           r: 14 },
+  inner:    { color: '#F7C995', label: 'Inner Circle',     r: 16 },
+  disciple: { color: '#5A7A8E', label: 'Disciple',         r: 12 },
+  women:    { color: '#C97A5A', label: 'Women w/ Jesus',   r: 13 },
+  church:   { color: '#6B9AA5', label: 'Early Church',     r: 13 },
+  opponent: { color: '#6E6058', label: 'Opponent',         r: 13 },
+  encounter:{ color: '#9CB48A', label: 'Encounter',        r: 13 },
 }
 
 export const REL_STYLES = {
-  lineage:  { stroke: '#C9A84C', width: 2.5, dash: null,    label: 'Lineage' },
-  blood:    { stroke: '#D4813A', width: 2,   dash: null,    label: 'Blood' },
-  prophecy: { stroke: '#CC3344', width: 2,   dash: '8,5',   label: 'Prophecy' },
-  type:     { stroke: '#D4A020', width: 2,   dash: '4,4',   label: 'OT Type' },
-  disciple: { stroke: '#4A80CC', width: 2,   dash: null,    label: 'Disciple' },
-  ministry: { stroke: '#3A9A8A', width: 2,   dash: '6,4',   label: 'Ministry' },
-  encounter:{ stroke: '#4AAA7A', width: 2,   dash: '3,5',   label: 'Encounter' },
-  married:  { stroke: '#CC6688', width: 2,   dash: null,    label: 'Married' },
-  sibling:  { stroke: '#9966CC', width: 2,   dash: '6,3',   label: 'Sibling' },
-  enemy:    { stroke: '#887777', width: 2,   dash: '5,5',   label: 'Enemy' },
-  apostle:  { stroke: '#5588DD', width: 2,   dash: null,    label: 'Apostle (post-Resurrection)' },
+  lineage:  { stroke: '#F36B21', width: 2.5, dash: null,    label: 'Lineage' },
+  blood:    { stroke: '#F7C995', width: 2,   dash: null,    label: 'Blood' },
+  prophecy: { stroke: '#A8453A', width: 2,   dash: '8,5',   label: 'Prophecy' },
+  type:     { stroke: '#C07840', width: 2,   dash: '4,4',   label: 'OT Type' },
+  disciple: { stroke: '#98B8C5', width: 2,   dash: null,    label: 'Disciple' },
+  ministry: { stroke: '#6B9AA5', width: 2,   dash: '6,4',   label: 'Ministry' },
+  encounter:{ stroke: '#9CB48A', width: 2,   dash: '3,5',   label: 'Encounter' },
+  married:  { stroke: '#C97A5A', width: 2,   dash: null,    label: 'Married' },
+  sibling:  { stroke: '#7A8FA0', width: 2,   dash: '6,3',   label: 'Sibling' },
+  enemy:    { stroke: '#6E6058', width: 2,   dash: '5,5',   label: 'Enemy' },
+  apostle:  { stroke: '#5A7A8E', width: 2,   dash: null,    label: 'Apostle (post-Resurrection)' },
 }
 
 export const NODES = [
