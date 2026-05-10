@@ -135,16 +135,33 @@ html, body, #root {
   background: rgba(54,70,84,0.96);
   border: 1px solid #5a6b78;
   border-radius: 8px;
-  padding: 10px 14px;
+  padding: 0;
   font-family: 'Manrope', sans-serif;
   font-size: 11px;
   font-weight: 500;
   z-index: 5;
   max-width: 260px;
+  max-height: 60vh;
+  overflow-y: auto;
   color: #EAE9E6;
 }
+.legend-header {
+  position: sticky;
+  top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  background: rgba(54,70,84,0.98);
+  border-bottom: 1px solid #5a6b78;
+  cursor: pointer;
+  user-select: none;
+  border-radius: 8px 8px 0 0;
+}
+.legend.collapsed .legend-header { border-bottom: none; border-radius: 8px; }
+.legend-body { padding: 8px 14px 12px; }
 .legend h4 {
-  margin: 0 0 6px;
+  margin: 0;
   font-size: 12px;
   font-weight: 800;
   color: #F36B21;
@@ -155,8 +172,20 @@ html, body, #root {
 .legend-line { width: 24px; height: 2px; }
 .legend-dot { width: 10px; height: 10px; border-radius: 50%; }
 .legend-collapse {
-  position: absolute; top: 6px; right: 8px;
-  cursor: pointer; color: #98B8C5; font-size: 14px; user-select: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  background: rgba(243,107,33,0.15);
+  border: 1px solid #5a6b78;
+  border-radius: 6px;
+  color: #F36B21;
+  font-size: 18px;
+  font-weight: 700;
+  cursor: pointer;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .info-panel {
@@ -249,3 +278,54 @@ html, body, #root {
   pointer-events: none;
   text-anchor: middle;
 }
+
+/* ------- Mobile ------- */
+@media (max-width: 720px) {
+  .topbar {
+    padding: 8px 10px;
+    gap: 8px;
+  }
+  .title { font-size: 14px; }
+  .subtitle { font-size: 10px; }
+  .pills {
+    width: 100%;
+    margin-left: 0;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding-bottom: 4px;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .pills::-webkit-scrollbar { display: none; }
+  .pill {
+    flex: 0 0 auto;
+    padding: 6px 10px;
+    font-size: 11px;
+  }
+
+  .legend {
+    bottom: 12px;
+    left: 12px;
+    right: 64px;
+    max-width: none;
+    max-height: 50vh;
+  }
+
+  .zoom-controls {
+    bottom: 12px;
+    right: 12px;
+    gap: 4px;
+  }
+  .zoom-btn { width: 44px; height: 44px; }
+
+  .info-panel {
+    top: auto;
+    bottom: 12px;
+    left: 12px;
+    right: 12px;
+    width: auto;
+    max-height: 55vh;
+    padding: 12px 14px;
+  }
+}
+

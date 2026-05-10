@@ -12,9 +12,13 @@ export default function App() {
   const [selected, setSelected] = useState(null)
   const [hovered, setHovered] = useState(null)
   const [activeFilters, setActiveFilters] = useState(new Set())
-  const [legendOpen, setLegendOpen] = useState(true)
+  const [legendOpen, setLegendOpen] = useState(() =>
+    typeof window !== 'undefined' ? window.innerWidth > 720 : true
+  )
 
   const dragRef = useRef({ active: false, lastX: 0, lastY: 0, moved: false, pointerId: null })
+  const pointersRef = useRef(new Map())
+  const pinchRef = useRef(null)
 
   // Initial fit: center on Jesus
   useEffect(() => {
@@ -34,11 +38,45 @@ export default function App() {
     const c = containerRef.current
     if (!c) return
     c.setPointerCapture?.(e.pointerId)
+    pointersRef.current.set(e.pointerId, { x: e.clientX, y: e.clientY })
+
+    if (pointersRef.current.size === 2) {
+      const [p1, p2] = Array.from(pointersRef.current.values())
+      const dist = Math.hypot(p2.x - p1.x, p2.y - p1.y)
+      const cx = (p1.x + p2.x) / 2
+      const cy = (p1.y + p2.y) / 2
+      pinchRef.current = { startDist: dist, startScale: transform.scale, cx, cy }
+      dragRef.current.active = false
+      return
+    }
     dragRef.current = {
       active: true, lastX: e.clientX, lastY: e.clientY, moved: false, pointerId: e.pointerId,
     }
   }
   const onPointerMove = (e) => {
+    if (pointersRef.current.has(e.pointerId)) {
+      pointersRef.current.set(e.pointerId, { x: e.clientX, y: e.clientY })
+    }
+
+    // Pinch zoom
+    if (pointersRef.current.size === 2 && pinchRef.current) {
+      const [p1, p2] = Array.from(pointersRef.current.values())
+      const dist = Math.hypot(p2.x - p1.x, p2.y - p1.y)
+      const c = containerRef.current
+      if (!c) return
+      const rect = c.getBoundingClientRect()
+      const cx = (p1.x + p2.x) / 2 - rect.left
+      const cy = (p1.y + p2.y) / 2 - rect.top
+      const ratio = dist / pinchRef.current.startDist
+      let newScale = Math.max(MIN_SCALE, Math.min(MAX_SCALE, pinchRef.current.startScale * ratio))
+      setTransform(t => {
+        const newX = cx - (cx - t.x) * (newScale / t.scale)
+        const newY = cy - (cy - t.y) * (newScale / t.scale)
+        return { x: newX, y: newY, scale: newScale }
+      })
+      return
+    }
+
     const d = dragRef.current
     if (!d.active) return
     const dx = e.clientX - d.lastX
@@ -50,11 +88,12 @@ export default function App() {
   }
   const onPointerUp = (e) => {
     const c = containerRef.current
-    const d = dragRef.current
-    if (c && d.pointerId != null) {
-      try { c.releasePointerCapture(d.pointerId) } catch {}
+    pointersRef.current.delete(e.pointerId)
+    if (pointersRef.current.size < 2) pinchRef.current = null
+    if (c) { try { c.releasePointerCapture(e.pointerId) } catch {} }
+    if (dragRef.current.pointerId === e.pointerId) {
+      dragRef.current = { active: false, lastX: 0, lastY: 0, moved: false, pointerId: null }
     }
-    dragRef.current = { active: false, lastX: 0, lastY: 0, moved: false, pointerId: null }
   }
 
   const onWheel = (e) => {
@@ -316,13 +355,18 @@ export default function App() {
         </div>
 
         {/* Legend */}
-        <div className="legend">
-          <span className="legend-collapse" onClick={() => setLegendOpen(o => !o)}>
-            {legendOpen ? '−' : '+'}
-          </span>
-          <h4>Legend</h4>
+        <div className={`legend ${legendOpen ? '' : 'collapsed'}`}>
+          <div
+            className="legend-header"
+            onClick={() => setLegendOpen(o => !o)}
+            role="button"
+            aria-expanded={legendOpen}
+          >
+            <h4>Legend</h4>
+            <span className="legend-collapse" aria-hidden="true">{legendOpen ? '−' : '+'}</span>
+          </div>
           {legendOpen && (
-            <>
+            <div className="legend-body">
               <div style={{ marginBottom: 6 }}>
                 {Object.entries(NODE_TYPES).map(([k, v]) => (
                   <div className="legend-row" key={k}>
@@ -331,7 +375,7 @@ export default function App() {
                   </div>
                 ))}
               </div>
-              <div style={{ borderTop: '1px solid #3a2a52', paddingTop: 6 }}>
+              <div style={{ borderTop: '1px solid #5a6b78', paddingTop: 6 }}>
                 {Object.entries(REL_STYLES).map(([k, v]) => (
                   <div className="legend-row" key={k}>
                     <svg className="legend-line" width="24" height="6">
@@ -345,7 +389,7 @@ export default function App() {
                   </div>
                 ))}
               </div>
-            </>
+            </div>
           )}
         </div>
 
